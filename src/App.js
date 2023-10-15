@@ -13,22 +13,30 @@ import Home from "./Components/Home";
 import FlashMessages from "./Components/FlashMessages";
 import CreatePost from "./Components/CreatePost";
 import ViewSinglePost from "./Components/ViewSinglePost";
+import ExampleContext from "./ExampleContext";
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(
+    Boolean(localStorage.getItem("complexappToken"))
+  );
+  const [flashMessages, setFlashMessages] = useState([]);
 
-   const [loggedIn, setLoggedIn] = useState(
-     Boolean(localStorage.getItem("complexappToken"))
-   );
-  
+  function addFlashMessage(msg) {
+    setFlashMessages((prev) => prev.concat(msg));
+  }
+
   return (
     <div className="App">
       <BrowserRouter>
         <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-        <FlashMessages />
+        <FlashMessages messages={flashMessages} />
         <Routes>
           <Route path="/" element={loggedIn ? <Home /> : <HomeGuest />} />
           <Route path="/post/:id" element={<ViewSinglePost />} />
-          <Route path="/create-post" element={<CreatePost />} />
+          <Route
+            path="/create-post"
+            element={<CreatePost addFlashMessage={addFlashMessage} />}
+          />
           <Route path="/about-us" element={<About />} />
           <Route path="/terms" element={<Terms />} />
         </Routes>

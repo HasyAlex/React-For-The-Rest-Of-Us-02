@@ -3,20 +3,25 @@ import Page from "./Page";
 import axios, * as others from "axios";
 import { useNavigate } from "react-router-dom";
 
-function CreatePost() {
-  const [title, setTitle] = useState()
-  const [body, setBody] = useState()
-  const navigate = useNavigate()
+function CreatePost(props) {
+  const [title, setTitle] = useState();
+  const [body, setBody] = useState();
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const response = await axios.post('/create-post', { title, body, token: localStorage.getItem("complexappToken") })
+      const response = await axios.post("/create-post", {
+        title,
+        body,
+        token: localStorage.getItem("complexappToken"),
+      });
+      props.addFlashMessage("Post Created!");
       navigate(`/post/${response.data}`);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }  
+  }
 
   return (
     <Page title="Create New Post">
