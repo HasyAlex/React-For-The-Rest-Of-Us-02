@@ -13,7 +13,7 @@ import Home from "./Components/Home";
 import FlashMessages from "./Components/FlashMessages";
 import CreatePost from "./Components/CreatePost";
 import ViewSinglePost from "./Components/ViewSinglePost";
-import ExampleContext from "./ExampleContext";
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(
