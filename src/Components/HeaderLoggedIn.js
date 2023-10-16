@@ -1,7 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import ExampleContext from "../ExampleContext";
 
 function HeaderLoggedIn(props) {
+  const { setLoggedIn } = useContext(ExampleContext);
+
+  function handleLogout() {
+    setLoggedIn(false);
+    localStorage.removeItem("complexappToken");
+    localStorage.removeItem("complexappUsername");
+    localStorage.removeItem("complexappAvatar");
+  }
+
   return (
     <div className="flex-row my-3 my-md-0">
       <a href="#" className="text-white mr-2 header-search-icon">
@@ -21,7 +31,7 @@ function HeaderLoggedIn(props) {
         Create Post
       </Link>
       <button
-        onClick={() => props.setLoggedIn(false)}
+        onClick={() => handleLogout()}
         className="btn btn-sm btn-secondary"
       >
         Sign Out
