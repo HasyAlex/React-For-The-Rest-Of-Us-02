@@ -14,6 +14,7 @@ import ViewSinglePost from "./Components/ViewSinglePost";
 
 import axios, * as others from "axios";
 import ExampleContext from "./ExampleContext";
+import PlayGround from "./Components/PlayGround";
 axios.defaults.baseURL = "http://localhost:8080";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route path="/create-post" element={<CreatePost />} />
             <Route path="/about-us" element={<About />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/PlayG" element={<PlayGround />} />
           </Routes>
           <Footer />
         </BrowserRouter>
