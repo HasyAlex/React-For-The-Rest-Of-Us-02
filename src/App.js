@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import "./App.css";
 
 import Footer from "./Components/Footer";
@@ -18,6 +18,32 @@ import PlayGround from "./Components/PlayGround";
 axios.defaults.baseURL = "http://localhost:8080";
 
 function App() {
+  const initialState = {
+    loggedIn: localStorage.getItem("complexappToken"),
+    flashMessages: [],
+  };
+
+  function ourReducer(state, action) {
+    switch (action.type) {
+      case "login":
+        return { loggedIn: true, flashMessages: state.flashMessages };
+
+      case "logout":
+        return { loggedIn: false, flashMessages: state.flashMessages };
+
+      case "flashMessage":
+        return {
+          loggedIn: state.loggedIn,
+          flashMessages: state.flashMessages.concat(action.value),
+        };
+
+      default:
+        break;
+    }
+  }
+
+  const [state, dispatch] = useReducer(ourReducer, initialState);
+
   const [loggedIn, setLoggedIn] = useState(
     Boolean(localStorage.getItem("complexappToken"))
   );
