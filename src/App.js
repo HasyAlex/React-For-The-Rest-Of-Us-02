@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useImmerReducer } from "use-immer";
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import "./App.css";
 
 import Footer from "./Components/Footer";
@@ -23,12 +23,19 @@ function App() {
   const initialState = {
     loggedIn: localStorage.getItem("complexappToken"),
     flashMessages: [],
+    user: {
+      token: localStorage.getItem("complexappToken"),
+      username: localStorage.getItem("complexappUsername"),
+      avatar: localStorage.getItem("complexappAvatar"),
+    },
   };
 
   function ourReducer(draft, action) {
     switch (action.type) {
       case "login":
+        debugger;
         draft.loggedIn = true;
+        draft.user = action.data;
         return;
       case "logout":
         draft.loggedIn = false;
@@ -42,6 +49,18 @@ function App() {
   }
 
   const [state, dispatch] = useImmerReducer(ourReducer, initialState);
+
+  useEffect(() => {
+    if (state.loggedIn) {
+      localStorage.setItem("complexappToken", state.user.token);
+      localStorage.setItem("complexappUsername", state.user.username);
+      localStorage.setItem("complexappAvatar", state.user.avatar);
+    } else {
+      localStorage.removeItem("complexappToken");
+      localStorage.removeItem("complexappUsername");
+      localStorage.removeItem("complexappAvatar");
+    }
+  }, [state.loggedIn]);
 
   return (
     <div className="App">
