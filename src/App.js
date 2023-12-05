@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useImmerReducer } from "use-immer";
 import { useReducer, useState } from "react";
 import "./App.css";
 
@@ -24,26 +25,23 @@ function App() {
     flashMessages: [],
   };
 
-  function ourReducer(state, action) {
+  function ourReducer(draft, action) {
     switch (action.type) {
       case "login":
-        return { loggedIn: true, flashMessages: state.flashMessages };
-
+        draft.loggedIn = true;
+        return;
       case "logout":
-        return { loggedIn: false, flashMessages: state.flashMessages };
-
+        draft.loggedIn = false;
+        return;
       case "flashMessage":
-        return {
-          loggedIn: state.loggedIn,
-          flashMessages: state.flashMessages.concat(action.value),
-        };
-
+        draft.flashMessages.push(action.value);
+        return;
       default:
         break;
     }
   }
 
-  const [state, dispatch] = useReducer(ourReducer, initialState);
+  const [state, dispatch] = useImmerReducer(ourReducer, initialState);
 
   return (
     <div className="App">
