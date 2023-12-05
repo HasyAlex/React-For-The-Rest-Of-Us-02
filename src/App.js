@@ -13,7 +13,8 @@ import CreatePost from "./Components/CreatePost";
 import ViewSinglePost from "./Components/ViewSinglePost";
 
 import axios, * as others from "axios";
-import ExampleContext from "./ExampleContext";
+import DispatchContext from "./DispatchContext";
+import StateContext from "./StateContext";
 import PlayGround from "./Components/PlayGround";
 axios.defaults.baseURL = "http://localhost:8080";
 
@@ -44,32 +45,28 @@ function App() {
 
   const [state, dispatch] = useReducer(ourReducer, initialState);
 
-  const [loggedIn, setLoggedIn] = useState(
-    Boolean(localStorage.getItem("complexappToken"))
-  );
-  const [flashMessages, setFlashMessages] = useState([]);
-
-  function addFlashMessage(msg) {
-    setFlashMessages((prev) => prev.concat(msg));
-  }
-
   return (
     <div className="App">
-      <ExampleContext.Provider value={{ addFlashMessage, setLoggedIn }}>
-        <BrowserRouter>
-          <Header loggedIn={loggedIn} />
-          <FlashMessages messages={flashMessages} />
-          <Routes>
-            <Route path="/" element={loggedIn ? <Home /> : <HomeGuest />} />
-            <Route path="/post/:id" element={<ViewSinglePost />} />
-            <Route path="/create-post" element={<CreatePost />} />
-            <Route path="/about-us" element={<About />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/PlayG" element={<PlayGround />} />
-          </Routes>
-          <Footer />
-        </BrowserRouter>
-      </ExampleContext.Provider>
+      <StateContext.Provider value={state}>
+        <DispatchContext.Provider value={dispatch}>
+          <BrowserRouter>
+            <FlashMessages messages={state.flashMessages} />
+            <Header />
+            <Routes>
+              <Route
+                path="/"
+                element={state.loggedIn ? <Home /> : <HomeGuest />}
+              />
+              <Route path="/post/:id" element={<ViewSinglePost />} />
+              <Route path="/create-post" element={<CreatePost />} />
+              <Route path="/about-us" element={<About />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/PlayG" element={<PlayGround />} />
+            </Routes>
+            <Footer />
+          </BrowserRouter>
+        </DispatchContext.Provider>
+      </StateContext.Provider>
     </div>
   );
 }
