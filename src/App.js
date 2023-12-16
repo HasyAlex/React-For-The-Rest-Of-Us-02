@@ -17,6 +17,8 @@ import axios, * as others from "axios";
 import DispatchContext from "./DispatchContext";
 import StateContext from "./StateContext";
 import PlayGround from "./Components/PlayGround";
+import Profile from "./Components/Profile";
+import TestPlayGround from "./Components/test-play-ground/test-play-ground";
 axios.defaults.baseURL = "http://localhost:8080";
 
 function App() {
@@ -70,6 +72,7 @@ function App() {
             <FlashMessages messages={state.flashMessages} />
             <Header />
             <Routes>
+              <Route path="/profile/:username" element={<Profile />} />
               <Route
                 path="/"
                 element={state.loggedIn ? <Home /> : <HomeGuest />}
@@ -78,7 +81,11 @@ function App() {
               <Route path="/create-post" element={<CreatePost />} />
               <Route path="/about-us" element={<About />} />
               <Route path="/terms" element={<Terms />} />
-              <Route path="/PlayG" element={<PlayGround />} />
+              <Route path="/PlayGround" element={<PlayGround />} />
+              <Route
+                path="/TestPlayGround"
+                element={<TestPlayGround initialCount={10} />}
+              />
             </Routes>
             <Footer />
           </BrowserRouter>
