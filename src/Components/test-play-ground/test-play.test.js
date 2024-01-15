@@ -3,9 +3,11 @@ import {
   getByRole,
   getByTestId,
   render,
+  screen,
 } from "@testing-library/react";
 import TestPlayGround from "./test-play-ground";
 
+//Testing In React Tutorial - Jest and React Testing Library
 describe(TestPlayGround, () => {
   it("displays the correct initial count", () => {
     const { getByTestId } = render(<TestPlayGround initialCount={10} />);
@@ -48,3 +50,4 @@ describe(TestPlayGround, () => {
     expect(countValue2).toEqual(-10);
   });
 });
+

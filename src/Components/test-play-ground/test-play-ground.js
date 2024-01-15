@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
 function TestPlayGround({ initialCount }) {
-  console.log("001...." + initialCount);
-
   const [count, setCount] = useState(initialCount);
 
   const increment = () => {
@@ -19,10 +17,7 @@ function TestPlayGround({ initialCount }) {
   };
   return (
     <div>
-      <h1>
-        {" "}
-        Count: <span data-testid="count">{count}</span>
-      </h1>
+      count : <span data-testid="count">{count}</span>
       <div>
         <button onClick={increment}>Increment</button>
         <button onClick={decrement}>Decrement</button>
