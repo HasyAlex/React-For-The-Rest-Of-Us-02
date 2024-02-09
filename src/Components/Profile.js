@@ -24,7 +24,7 @@ function Profile() {
         });
         setProfileData(response.data);
       } catch (error) {
-        console.log("Profile Error");
+        console.log("Network Error! 500");
       }
     }
     fetchData();

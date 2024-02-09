@@ -72,7 +72,7 @@ function App() {
             <FlashMessages messages={state.flashMessages} />
             <Header />
             <Routes>
-              <Route path="/profile/:username" element={<Profile />} />
+              <Route path="/profile/:username/*" element={<Profile />} />
               <Route
                 path="/"
                 element={state.loggedIn ? <Home /> : <HomeGuest />}
